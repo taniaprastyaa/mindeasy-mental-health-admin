@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useProductStore } from "@/stores/productStore";
+import { useArticleStore } from "@/stores/articleStore";
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getFilteredRowModel } from "@tanstack/react-table";
-import { getProductColumns } from "@/components/dashboard/datatable/columns/product";
+import { getArticleColumns } from "@/components/dashboard/datatable/columns/article";
 import { DataTable } from "@/components/dashboard/datatable/datatable";
 import { DataTablePagination } from "@/components/dashboard/datatable/datatable-pagination";
 import { TableSearch } from "@/components/dashboard/datatable/table-search";
@@ -13,52 +13,52 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { DeleteProductDialog } from "@/components/dashboard/forms/product/delete";
+import { DeleteArticleDialog } from "@/components/dashboard/forms/article/delete";
 
-export default function ProductPage() {
+export default function ArticlePage() {
   const [globalFilter, setGlobalFilter] = useState("");
-  const { products, fetchProducts, loading} = useProductStore();
+  const { articles, fetchArticles, loading} = useArticleStore();
   const router = useRouter();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState(0);
-  const [selectedProductCode, setSelectedProductCode] = useState("");
+  const [selectedArticleId, setSelectedArticleId] = useState(0);
+  const [selectedArticleTitle, setSelectedArticleTitle] = useState("");
 
   useEffect(() => {
-    const getProducts = async () => {
+    const getArticles = async () => {
       try {
-        await fetchProducts();
+        await fetchArticles();
       } catch (error) {
         if (error instanceof Error) {
           toast.error(error.message);
         } else {
-          toast.error("Terjadi kesalahan saat mengambil data product");
+          toast.error("Terjadi kesalahan saat mengambil data article");
         }
       }
     };
-    getProducts();
-  }, [fetchProducts]);
+    getArticles();
+  }, [fetchArticles]);
 
   const table = useReactTable({
-    data: products,
-    columns: getProductColumns({
+    data: articles,
+    columns: getArticleColumns({
       actions: (row) => [
         {
           label: "Lihat Detail",
           onClick: () => {
-            router.push(`/dashboard/product/${row.id}`);
+            router.push(`/dashboard/article/${row.id}`);
           },
         },
         {
           label: "Ubah",
           onClick: () => {
-            router.push(`/dashboard/product/${row.id}/update`);
+            router.push(`/dashboard/article/${row.id}/update`);
           },
         },
         {
           label: "Hapus",
           onClick: async () => {
-            setSelectedProductId(row.id);
-            setSelectedProductCode(row.name);
+            setSelectedArticleId(row.id);
+            setSelectedArticleTitle(row.title);
             setDeleteDialogOpen(true);
           },
         },
@@ -75,11 +75,11 @@ export default function ProductPage() {
     <div className="px-4 lg:px-6">
       <Card>
         <CardHeader>
-          <CardTitle>Daftar Produk</CardTitle>
+          <CardTitle>Daftar Artikel</CardTitle>
           <div className="flex gap-5 items-center mt-2">
             <TableSearch value={globalFilter} onChange={setGlobalFilter} />
             <Button asChild>
-              <Link href="/dashboard/product/create"><IconPlus className="w-5 h-5 mr-2" />Tambah Produk</Link>
+              <Link href="/dashboard/article/create"><IconPlus className="w-5 h-5 mr-2" />Tambah Artikel</Link>
             </Button>
           </div>
         </CardHeader>
@@ -88,13 +88,13 @@ export default function ProductPage() {
             <p>Memproses...</p>
           ) : (
             <>
-              <DataTable table={table} columnsLength={getProductColumns({}).length} />
+              <DataTable table={table} columnsLength={getArticleColumns({}).length} />
               <DataTablePagination table={table} />
             </>
           )}
         </CardContent>
       </Card>
-      <DeleteProductDialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)} productId={selectedProductId} productName={selectedProductCode} />
+      <DeleteArticleDialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)} articleId={selectedArticleId} articleTitle={selectedArticleTitle} />
     </div>
   );
 }

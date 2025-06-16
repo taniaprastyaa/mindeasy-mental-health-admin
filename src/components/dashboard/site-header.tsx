@@ -7,18 +7,18 @@ import { SidebarTrigger } from "@/components/ui/sidebar"
 const pageTitles: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/dashboard/category": "Halaman Kategori",
-  "/dashboard/product": "Halaman Produk",
-  "/dashboard/product/[id]": "Halaman Detail Produk",
-  "/dashboard/product/[id]/update": "Halaman Update Produk",
+  "/dashboard/article": "Halaman Artikel",
+  "/dashboard/article/[id]": "Halaman Detail Artikel",
+  "/dashboard/article/[id]/update": "Halaman Update Artikel",
 }
 
 function getDynamicTitle(pathname: string): string {
-  if (/^\/dashboard\/product\/[^\/]+$/.test(pathname)) {
-    return pageTitles["/dashboard/product/[id]"]
+  if (/^\/dashboard\/article\/[^\/]+$/.test(pathname)) {
+    return pageTitles["/dashboard/article/[id]"]
   }
 
-  if (/^\/dashboard\/product\/[^\/]+\/update$/.test(pathname)) {
-    return pageTitles["/dashboard/product/[id]/update"]
+  if (/^\/dashboard\/article\/[^\/]+\/update$/.test(pathname)) {
+    return pageTitles["/dashboard/article/[id]/update"]
   }
 
   return pageTitles[pathname] ?? "Dashboard"

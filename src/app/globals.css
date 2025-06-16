@@ -21,7 +21,7 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-main: #297AFF;
+  --color-main: #2563EB;
   --color-font: #1F1F1F;
 }
 
@@ -69,7 +69,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #297AFF;
+  --primary: #2563EB;
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
@@ -80,7 +80,7 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: #297AFF;
+  --ring: #2563EB;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -88,7 +88,7 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #297AFF;
+  --sidebar-primary: #2563EB;
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
@@ -148,7 +148,7 @@
   }
   .btn-primary{
     @apply text-white duration-200 hover:brightness-110;
-    background: #297AFF !important;
+    background: #2563EB !important;
     border-radius: 12px !important;
     box-shadow: 0px 0px 16px 0px #4089FF, 0px -2px 4px 0px rgba(0, 0, 0, 0.25) inset, -2px 2px 4px 0px rgba(255, 255, 255, 0.25) inset;
   }

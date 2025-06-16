@@ -18,7 +18,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL('https://avara-five.vercel.app'),
   title: {
-    default: 'Dashboard Admin Avara',
+    default: 'Dashboard Admin Mindhealth',
     template: '%s | Dashboard Admin Avara',
   },
   description:

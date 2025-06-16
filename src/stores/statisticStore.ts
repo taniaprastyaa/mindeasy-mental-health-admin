@@ -3,83 +3,121 @@ import { supabaseClient } from "@/utils/supabase";
 
 const supabase = supabaseClient;
 
-interface LatestProduct {
-  id: number;
-  product_name: string;
-  price: number;
-  created_at_formatted: string;
+interface ArticleCategoryStat {
   category_name: string;
-  feature_list: string;
+  article_count: number;
+}
+
+interface ArticleDurationStat {
+  category_name: string;
+  average_read_duration: number;
+}
+
+interface MonthlyArticleStat {
+  article_year: number;
+  article_month_number: number;
+  article_month_name: string;
+  article_count: number;
 }
 
 interface StatisticState {
-  totalCategory: number;
-  totalProduct: number;
-  totalProductThisMonth: number;
-  totalIngredients: number;
-  latestProducts: LatestProduct[];
+  totalArticles: number;
+  totalPublishedArticles: number;
+  totalDraftArticles: number;
+  totalCategories: number;
+  articlePerCategory: ArticleCategoryStat[];
+  avgReadDurationPerCategory: ArticleDurationStat[];
+  articlesLast12Months: MonthlyArticleStat[];
   loading: boolean;
-  fetchStatistics: () => Promise<void>;
-  fetchLatestProducts: () => Promise<void>;
+
+  fetchTotals: () => Promise<void>;
+  fetchArticlePerCategory: () => Promise<void>;
+  fetchAvgReadDurationPerCategory: () => Promise<void>;
+  fetchArticlesLast12Months: () => Promise<void>;
 }
 
 export const useStatisticStore = create<StatisticState>((set) => ({
-  totalCategory: 0,
-  totalProduct: 0,
-  totalProductThisMonth: 0,
-  totalIngredients: 0,
-  latestProducts: [],
+  totalArticles: 0,
+  totalPublishedArticles: 0,
+  totalDraftArticles: 0,
+  totalCategories: 0,
+  articlePerCategory: [],
+  avgReadDurationPerCategory: [],
+  articlesLast12Months: [],
   loading: false,
 
-  fetchStatistics: async () => {
+  fetchTotals: async () => {
     set({ loading: true });
 
     const [
-      { data: categoryData, error: categoryError },
-      { data: productData, error: productError },
-      { data: newProductData, error: newProductError },
-      { data: ingredientsData, error: ingredientsError },
+      { data: totalArticles, error: err1 },
+      { data: totalPublished, error: err2 },
+      { data: totalDraft, error: err3 },
+      { data: totalCategories, error: err4 }
     ] = await Promise.all([
-      supabase.rpc("get_total_category"),
-      supabase.rpc("get_total_product"),
-      supabase.rpc("get_new_product_this_month"),
-      supabase.rpc("get_total_unique_ingredients"),
+      supabase.rpc("get_total_articles"),
+      supabase.rpc("get_total_published_articles"),
+      supabase.rpc("get_total_draft_articles"),
+      supabase.rpc("get_total_categories")
     ]);
 
     set({ loading: false });
 
-    if (categoryError || productError || newProductError || ingredientsError) {
-      console.error("Statistik Error:", {
-        categoryError,
-        productError,
-        newProductError,
-        ingredientsError,
-      });
-      throw new Error("Gagal mengambil statistik data!");
+    if (err1 || err2 || err3 || err4) {
+      console.error("Statistik Error:", { err1, err2, err3, err4 });
+      throw new Error("Gagal mengambil data statistik total artikel!");
     }
 
     set({
-      totalCategory: categoryData || 0,
-      totalProduct: productData || 0,
-      totalProductThisMonth: newProductData || 0,
-      totalIngredients: ingredientsData || 0,
+      totalArticles: totalArticles ?? 0,
+      totalPublishedArticles: totalPublished ?? 0,
+      totalDraftArticles: totalDraft ?? 0,
+      totalCategories: totalCategories ?? 0,
     });
   },
 
-  fetchLatestProducts: async () => {
+  fetchArticlePerCategory: async () => {
     set({ loading: true });
 
-    const { data, error } = await supabase
-      .from("view_latest_products")
-      .select("*");
+    const { data, error } = await supabase.rpc("get_article_count_per_category");
 
     set({ loading: false });
 
     if (error) {
-      console.error("Error loading latest products:", error);
-      throw new Error("Gagal mengambil data produk terbaru!");
+      console.error("Error artikel per kategori:", error);
+      throw new Error("Gagal mengambil jumlah artikel per kategori!");
     }
 
-    set({ latestProducts: data || [] });
+    set({ articlePerCategory: data || [] });
+  },
+
+  fetchAvgReadDurationPerCategory: async () => {
+    set({ loading: true });
+
+    const { data, error } = await supabase.rpc("get_average_read_duration_per_category");
+
+    set({ loading: false });
+
+    if (error) {
+      console.error("Error rata-rata durasi baca:", error);
+      throw new Error("Gagal mengambil rata-rata durasi baca per kategori!");
+    }
+
+    set({ avgReadDurationPerCategory: data || [] });
+  },
+
+  fetchArticlesLast12Months: async () => {
+    set({ loading: true });
+
+    const { data, error } = await supabase.rpc("get_articles_written_last_12_months");
+
+    set({ loading: false });
+
+    if (error) {
+      console.error("Error artikel 12 bulan:", error);
+      throw new Error("Gagal mengambil statistik artikel 12 bulan terakhir!");
+    }
+
+    set({ articlesLast12Months: data || [] });
   },
 }));

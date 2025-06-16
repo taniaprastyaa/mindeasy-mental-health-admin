@@ -34,7 +34,7 @@ export function DeleteCategoryDialog({ open, onClose, categoryId, categoryName,
 
   return (
     <ActionModal open={open} onClose={onClose} type="delete" title={`Hapus Kategori ${categoryName}?`} onSubmit={handleDelete} loading={loading} >
-      <DeleteConfirmationMessage label={`category ${categoryName}`} />
+      <DeleteConfirmationMessage label={`kategori ${categoryName}`} />
     </ActionModal>
   );
 }
