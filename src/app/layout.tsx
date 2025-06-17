@@ -16,37 +16,37 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mindease.id"),
+  metadataBase: new URL("https://mindeasy.id"),
   title: {
-    default: "Dashboard Admin MindEase",
-    template: "%s | Dashboard Admin MindEase",
+    default: "Dashboard Admin MindEasy",
+    template: "%s | Dashboard Admin MindEasy",
   },
   description:
-    "Bergabunglah dengan ribuan yang telah merasakan manfaat MindEase. Temukan kedamaian dan kesejahteraan mental Anda hari ini untuk hidup lebih baik.",
+    "Bergabunglah dengan ribuan yang telah merasakan manfaat MindEasy. Temukan kedamaian dan kesejahteraan mental Anda hari ini untuk hidup lebih baik.",
   keywords: [
     "admin panel",
     "dashboard admin",
     "manajemen artikel",
     "artikel admin",
-    "MindEase",
+    "MindEasy",
     "kesehatan mental",
     "mental wellness",
   ],
   authors: [{ name: "Avara Developer Team" }],
   creator: "Avara Developer Team",
-  publisher: "MindEase",
+  publisher: "MindEasy",
   openGraph: {
-    title: "Dashboard Admin MindEase",
+    title: "Dashboard Admin MindEasy",
     description:
-      "Bergabunglah dengan ribuan yang telah merasakan manfaat MindEase. Temukan kedamaian dan kesejahteraan mental Anda hari ini untuk hidup lebih baik.",
-    url: "https://mindease.id",
-    siteName: "Dashboard Admin MindEase",
+      "Bergabunglah dengan ribuan yang telah merasakan manfaat MindEasy. Temukan kedamaian dan kesejahteraan mental Anda hari ini untuk hidup lebih baik.",
+    url: "https://mindeasy.id",
+    siteName: "Dashboard Admin MindEasy",
     images: [
       {
-        url: "https://mindease.id/img/logo-icon.svg",
+        url: "https://mindeasy.id/img/logo-icon.svg",
         width: 1200,
         height: 630,
-        alt: "MindEase Admin Panel",
+        alt: "MindEasy Admin Panel",
       },
     ],
     locale: "id_ID",
