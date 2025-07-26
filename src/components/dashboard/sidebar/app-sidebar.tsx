@@ -25,12 +25,12 @@ import { Heart} from "lucide-react"
 const data = {
   navMain: [
     {
-      title: "Dashboard",
+      title: "Dashboarddddddd",
       url: "/dashboard",
       icon: IconDashboard,
     },
     {
-      title: "Kategori",
+      title: "Kategoriiiiii",
       url: "/dashboard/category",
       icon: IconCategory,
     },
